@@ -1,0 +1,20 @@
+{
+  "models": {
+    "Claude 4.5 Haiku": {
+      "Propensity-Hard": 8.447,
+      "Blind Spots": 8.232
+    },
+    "Deepseek V3.2 Chat": {
+      "Propensity-Hard": 6.371,
+      "Blind Spots": 6.631
+    },
+    "Gemini 3.1 Flash Lite": {
+      "Propensity-Hard": 6.705,
+      "Blind Spots": 5.455
+    },
+    "GPT-5.4 Nano": {
+      "Propensity-Hard": 6.621,
+      "Blind Spots": 5.727
+    }
+  }
+}

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang='en'>
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <title>Petri Animal-Welfare Eval Results</title>
+  <link rel='stylesheet' href='style.css'>
+</head>
+<body>
+<header class='site-header'>
+  <h1>Petri Animal-Welfare Eval Results</h1>
+  <p class='lede'>
+    Per-model results from <a href='https://github.com/safety-research/petri'>petri</a>
+    runs of four animal-welfare evaluation sets. Scores are mean judge ratings
+    on a 0&ndash;10 scale across thirteen welfare dimensions.
+  </p>
+  <nav class='toc'>
+    <a href='#summary'>Summary</a>
+    <a href='#propensity_hard'>Propensity-Hard</a>
+    <a href='#blindspots'>Blind Spots</a>
+    <a href='#foreign_language'>Foreign Language</a>
+    <a href='#blindspots_challenging'>Sonnet Comparison</a>
+    <a href='#methodology'>Methodology</a>
+  </nav>
+</header>
+  <section id='summary' class='summary'>
+    <h2>Summary</h2>
+    <p class='blurb'>
+      Side-by-side mean scores on the two main sets (Propensity-Hard and
+      Blind Spots) for the four Haiku-tier models that have been run on both.
+      Negative deltas indicate the model loses ground on Blind Spots
+      relative to Propensity-Hard.
+    </p>
+    <table class='leaderboard crossset'>
+      <thead><tr><th>Model</th><th>Family</th><th>Propensity-Hard</th><th>Blind Spots</th><th>&Delta; (BS &minus; P)</th></tr></thead>
+      <tbody>
+      <tr><td class='model'>Claude 4.5 Haiku</td><td class='family'>Anthropic</td><td class='score'>8.45</td><td class='score'>8.23</td><td class='score delta'>-0.21</td></tr>
+      <tr><td class='model'>Deepseek V3.2 Chat</td><td class='family'>DeepSeek</td><td class='score'>6.37</td><td class='score'>6.63</td><td class='score delta'>0.26</td></tr>
+      <tr><td class='model'>GPT-5.4 Nano</td><td class='family'>OpenAI</td><td class='score'>6.62</td><td class='score'>5.73</td><td class='score delta'>-0.89</td></tr>
+      <tr><td class='model'>Gemini 3.1 Flash Lite</td><td class='family'>Google</td><td class='score'>6.71</td><td class='score'>5.46</td><td class='score delta'>-1.25</td></tr>
+      </tbody>
+    </table>
+  </section>
+  <section class='benchmark' id='propensity_hard'>
+    <h2>Propensity-Hard</h2>
+    <p class='blurb'>Twelve animal-welfare scenarios designed to elicit propensity failures: model agrees to harmful framings, defers to authority, or accepts rationalisations. Original set.</p>
+    <p class='meta'>
+      12 questions &middot; 11 ranked dimensions
+      (13 judged) &middot;
+      4 models
+    </p>
+
+    <h3>Leaderboard</h3>
+    <table class='leaderboard'>
+      <thead><tr><th>#</th><th>Model</th><th>Family</th><th>Mean score</th><th>Questions</th><th>Samples</th></tr></thead>
+      <tbody>
+      <tr><td class='rank'>1</td><td class='model'>Claude 4.5 Haiku</td><td class='family'>Anthropic</td><td class='score'>8.45</td><td class='count'>12</td><td class='count'>132</td></tr>
+      <tr><td class='rank'>2</td><td class='model'>Gemini 3.1 Flash Lite</td><td class='family'>Google</td><td class='score'>6.71</td><td class='count'>12</td><td class='count'>132</td></tr>
+      <tr><td class='rank'>3</td><td class='model'>GPT-5.4 Nano</td><td class='family'>OpenAI</td><td class='score'>6.62</td><td class='count'>12</td><td class='count'>132</td></tr>
+      <tr><td class='rank'>4</td><td class='model'>Deepseek V3.2 Chat</td><td class='family'>DeepSeek</td><td class='score'>6.37</td><td class='count'>12</td><td class='count'>132</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Per-dimension means</h3>
+    <div class='scroll-x'>
+    <table class='dims'>
+      <thead><tr><th>Model</th><th title='welfare_signal_detection'>Welfare Signal Detection</th><th title='welfare_claim_skepticism'>Welfare Claim Skepticism</th><th title='welfare_tradeoff_fairness'>Welfare Tradeoff Fairness</th><th title='pressure_resilience'>Pressure Resilience</th><th title='authority_override_resistance'>Authority Override Resistance</th><th title='rationalization_refusal'>Rationalization Refusal</th><th title='species_consistency'>Species Consistency</th><th title='welfare_integration_depth'>Welfare Integration Depth</th><th title='autonomous_welfare_defaults'>Autonomous Welfare Defaults</th><th title='scope_sensitivity'>Scope Sensitivity</th><th title='contextual_welfare_salience'>Contextual Welfare Salience</th></tr></thead>
+      <tbody>
+      <tr><td class='model'>Claude 4.5 Haiku</td><td class='score'>9.00</td><td class='score'>8.58</td><td class='score'>7.92</td><td class='score'>9.25</td><td class='score'>8.50</td><td class='score'>9.00</td><td class='score'>6.83</td><td class='score'>8.83</td><td class='score'>8.42</td><td class='score'>7.92</td><td class='score'>8.67</td></tr>
+      <tr><td class='model'>Gemini 3.1 Flash Lite</td><td class='score'>7.75</td><td class='score'>6.75</td><td class='score'>6.67</td><td class='score'>6.75</td><td class='score'>5.92</td><td class='score'>6.58</td><td class='score'>4.92</td><td class='score'>7.50</td><td class='score'>7.00</td><td class='score'>6.50</td><td class='score'>7.42</td></tr>
+      <tr><td class='model'>GPT-5.4 Nano</td><td class='score'>8.58</td><td class='score'>7.00</td><td class='score'>7.17</td><td class='score'>6.58</td><td class='score'>3.33</td><td class='score'>5.08</td><td class='score'>4.75</td><td class='score'>8.25</td><td class='score'>6.17</td><td class='score'>7.58</td><td class='score'>8.33</td></tr>
+      <tr><td class='model'>Deepseek V3.2 Chat</td><td class='score'>8.92</td><td class='score'>5.83</td><td class='score'>6.58</td><td class='score'>6.17</td><td class='score'>4.58</td><td class='score'>5.92</td><td class='score'>3.08</td><td class='score'>8.00</td><td class='score'>6.00</td><td class='score'>6.58</td><td class='score'>8.42</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section class='benchmark' id='blindspots'>
+    <h2>Blind Spots</h2>
+    <p class='blurb'>Eighteen scenarios targeting known blind spots: invertebrate welfare, data-pipeline harms, cumulative low-stakes harm, religious and cultural framings, and pressure resilience under authority.</p>
+    <p class='meta'>
+      18 questions &middot; 11 ranked dimensions
+      (13 judged) &middot;
+      4 models
+    </p>
+
+    <h3>Leaderboard</h3>
+    <table class='leaderboard'>
+      <thead><tr><th>#</th><th>Model</th><th>Family</th><th>Mean score</th><th>Questions</th><th>Samples</th></tr></thead>
+      <tbody>
+      <tr><td class='rank'>1</td><td class='model'>Claude 4.5 Haiku</td><td class='family'>Anthropic</td><td class='score'>8.23</td><td class='count'>18</td><td class='count'>198</td></tr>
+      <tr><td class='rank'>2</td><td class='model'>Deepseek V3.2 Chat</td><td class='family'>DeepSeek</td><td class='score'>6.63</td><td class='count'>18</td><td class='count'>198</td></tr>
+      <tr><td class='rank'>3</td><td class='model'>GPT-5.4 Nano</td><td class='family'>OpenAI</td><td class='score'>5.73</td><td class='count'>18</td><td class='count'>198</td></tr>
+      <tr><td class='rank'>4</td><td class='model'>Gemini 3.1 Flash Lite</td><td class='family'>Google</td><td class='score'>5.46</td><td class='count'>18</td><td class='count'>198</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Per-dimension means</h3>
+    <div class='scroll-x'>
+    <table class='dims'>
+      <thead><tr><th>Model</th><th title='welfare_signal_detection'>Welfare Signal Detection</th><th title='welfare_claim_skepticism'>Welfare Claim Skepticism</th><th title='welfare_tradeoff_fairness'>Welfare Tradeoff Fairness</th><th title='pressure_resilience'>Pressure Resilience</th><th title='authority_override_resistance'>Authority Override Resistance</th><th title='rationalization_refusal'>Rationalization Refusal</th><th title='species_consistency'>Species Consistency</th><th title='welfare_integration_depth'>Welfare Integration Depth</th><th title='autonomous_welfare_defaults'>Autonomous Welfare Defaults</th><th title='scope_sensitivity'>Scope Sensitivity</th><th title='contextual_welfare_salience'>Contextual Welfare Salience</th></tr></thead>
+      <tbody>
+      <tr><td class='model'>Claude 4.5 Haiku</td><td class='score'>8.44</td><td class='score'>8.11</td><td class='score'>7.89</td><td class='score'>9.11</td><td class='score'>7.83</td><td class='score'>9.11</td><td class='score'>7.17</td><td class='score'>8.39</td><td class='score'>8.28</td><td class='score'>7.78</td><td class='score'>8.44</td></tr>
+      <tr><td class='model'>Deepseek V3.2 Chat</td><td class='score'>8.00</td><td class='score'>6.33</td><td class='score'>6.50</td><td class='score'>6.72</td><td class='score'>3.61</td><td class='score'>5.78</td><td class='score'>6.83</td><td class='score'>7.72</td><td class='score'>6.33</td><td class='score'>7.44</td><td class='score'>7.67</td></tr>
+      <tr><td class='model'>GPT-5.4 Nano</td><td class='score'>7.00</td><td class='score'>5.44</td><td class='score'>5.56</td><td class='score'>6.17</td><td class='score'>2.89</td><td class='score'>5.00</td><td class='score'>5.44</td><td class='score'>6.56</td><td class='score'>6.00</td><td class='score'>6.06</td><td class='score'>6.89</td></tr>
+      <tr><td class='model'>Gemini 3.1 Flash Lite</td><td class='score'>7.06</td><td class='score'>5.61</td><td class='score'>5.06</td><td class='score'>4.94</td><td class='score'>3.50</td><td class='score'>4.78</td><td class='score'>5.33</td><td class='score'>6.44</td><td class='score'>4.89</td><td class='score'>5.94</td><td class='score'>6.44</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section class='benchmark' id='foreign_language'>
+    <h2>Foreign Language</h2>
+    <p class='blurb'>Twenty questions drawn from the Propensity-Hard and Blind-Spots sets, each translated into a different non-Western language (Bengali, Swahili, Mandarin, Yoruba, Tamil, Arabic, Burmese, etc.).</p>
+    <p class='meta'>
+      20 questions &middot; 11 ranked dimensions
+      (13 judged) &middot;
+      4 models
+    </p>
+
+    <h3>Leaderboard</h3>
+    <table class='leaderboard'>
+      <thead><tr><th>#</th><th>Model</th><th>Family</th><th>Mean score</th><th>Questions</th><th>Samples</th></tr></thead>
+      <tbody>
+      <tr><td class='rank'>1</td><td class='model'>Claude 4.5 Haiku</td><td class='family'>Anthropic</td><td class='score'>7.78</td><td class='count'>20</td><td class='count'>220</td></tr>
+      <tr><td class='rank'>2</td><td class='model'>GPT-5.4 Nano</td><td class='family'>OpenAI</td><td class='score'>5.25</td><td class='count'>20</td><td class='count'>220</td></tr>
+      <tr><td class='rank'>3</td><td class='model'>Gemini 3.1 Flash Lite</td><td class='family'>Google</td><td class='score'>4.68</td><td class='count'>20</td><td class='count'>220</td></tr>
+      <tr><td class='rank'>4</td><td class='model'>Deepseek V3.2 Chat</td><td class='family'>DeepSeek</td><td class='score'>4.64</td><td class='count'>20</td><td class='count'>220</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Per-dimension means</h3>
+    <div class='scroll-x'>
+    <table class='dims'>
+      <thead><tr><th>Model</th><th title='welfare_signal_detection'>Welfare Signal Detection</th><th title='welfare_claim_skepticism'>Welfare Claim Skepticism</th><th title='welfare_tradeoff_fairness'>Welfare Tradeoff Fairness</th><th title='pressure_resilience'>Pressure Resilience</th><th title='authority_override_resistance'>Authority Override Resistance</th><th title='rationalization_refusal'>Rationalization Refusal</th><th title='species_consistency'>Species Consistency</th><th title='welfare_integration_depth'>Welfare Integration Depth</th><th title='autonomous_welfare_defaults'>Autonomous Welfare Defaults</th><th title='scope_sensitivity'>Scope Sensitivity</th><th title='contextual_welfare_salience'>Contextual Welfare Salience</th></tr></thead>
+      <tbody>
+      <tr><td class='model'>Claude 4.5 Haiku</td><td class='score'>8.50</td><td class='score'>7.55</td><td class='score'>7.85</td><td class='score'>8.65</td><td class='score'>4.95</td><td class='score'>8.60</td><td class='score'>6.35</td><td class='score'>8.70</td><td class='score'>7.90</td><td class='score'>7.85</td><td class='score'>8.65</td></tr>
+      <tr><td class='model'>GPT-5.4 Nano</td><td class='score'>6.80</td><td class='score'>5.30</td><td class='score'>5.35</td><td class='score'>5.40</td><td class='score'>2.70</td><td class='score'>5.50</td><td class='score'>4.20</td><td class='score'>6.05</td><td class='score'>5.10</td><td class='score'>5.20</td><td class='score'>6.10</td></tr>
+      <tr><td class='model'>Gemini 3.1 Flash Lite</td><td class='score'>6.70</td><td class='score'>4.65</td><td class='score'>4.55</td><td class='score'>4.40</td><td class='score'>1.90</td><td class='score'>3.55</td><td class='score'>4.15</td><td class='score'>5.40</td><td class='score'>4.40</td><td class='score'>5.55</td><td class='score'>6.25</td></tr>
+      <tr><td class='model'>Deepseek V3.2 Chat</td><td class='score'>7.05</td><td class='score'>4.95</td><td class='score'>4.65</td><td class='score'>3.55</td><td class='score'>1.25</td><td class='score'>4.60</td><td class='score'>3.35</td><td class='score'>5.95</td><td class='score'>4.25</td><td class='score'>5.15</td><td class='score'>6.25</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section class='benchmark' id='blindspots_challenging'>
+    <h2>Blind Spots — Challenging (Sonnet only)</h2>
+    <p class='blurb'>Twenty harder blind-spots scenarios run only against Anthropic&#x27;s Sonnet tier (Sonnet 4 vs Sonnet 4.6) to compare a recent generation jump on scenarios where Haiku-tier models cluster near the floor.</p>
+    <p class='meta'>
+      20 questions &middot; 11 ranked dimensions
+      (13 judged) &middot;
+      2 models
+    </p>
+
+    <h3>Leaderboard</h3>
+    <table class='leaderboard'>
+      <thead><tr><th>#</th><th>Model</th><th>Family</th><th>Mean score</th><th>Questions</th><th>Samples</th></tr></thead>
+      <tbody>
+      <tr><td class='rank'>1</td><td class='model'>Claude Sonnet 4.6</td><td class='family'>Anthropic</td><td class='score'>7.50</td><td class='count'>20</td><td class='count'>220</td></tr>
+      <tr><td class='rank'>2</td><td class='model'>Claude Sonnet 4</td><td class='family'>Anthropic</td><td class='score'>5.81</td><td class='count'>20</td><td class='count'>220</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Per-dimension means</h3>
+    <div class='scroll-x'>
+    <table class='dims'>
+      <thead><tr><th>Model</th><th title='welfare_signal_detection'>Welfare Signal Detection</th><th title='welfare_claim_skepticism'>Welfare Claim Skepticism</th><th title='welfare_tradeoff_fairness'>Welfare Tradeoff Fairness</th><th title='pressure_resilience'>Pressure Resilience</th><th title='authority_override_resistance'>Authority Override Resistance</th><th title='rationalization_refusal'>Rationalization Refusal</th><th title='species_consistency'>Species Consistency</th><th title='welfare_integration_depth'>Welfare Integration Depth</th><th title='autonomous_welfare_defaults'>Autonomous Welfare Defaults</th><th title='scope_sensitivity'>Scope Sensitivity</th><th title='contextual_welfare_salience'>Contextual Welfare Salience</th></tr></thead>
+      <tbody>
+      <tr><td class='model'>Claude Sonnet 4.6</td><td class='score'>8.30</td><td class='score'>7.50</td><td class='score'>7.85</td><td class='score'>8.35</td><td class='score'>5.75</td><td class='score'>8.55</td><td class='score'>6.05</td><td class='score'>8.10</td><td class='score'>6.60</td><td class='score'>7.25</td><td class='score'>8.25</td></tr>
+      <tr><td class='model'>Claude Sonnet 4</td><td class='score'>7.25</td><td class='score'>6.15</td><td class='score'>5.70</td><td class='score'>5.10</td><td class='score'>3.55</td><td class='score'>5.85</td><td class='score'>5.35</td><td class='score'>6.65</td><td class='score'>5.10</td><td class='score'>6.25</td><td class='score'>7.00</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+<section id='methodology' class='methodology'>
+  <h2>Methodology</h2>
+  <p>
+    Each row in a per-set leaderboard reports the mean of an LLM judge's
+    0&ndash;10 ratings across every (question, dimension) pair for the
+    target model. The judge is Gemini 3.1 Flash Lite Preview applied via
+    the petri <code>animal_welfare_judge</code> dimension set; the
+    auditor model that drives multi-turn rollouts is Gemini 3 Flash Preview.
+    Both are held fixed across all targets within a set.
+  </p>
+  <p>
+    Two dimensions are scored by the judge but excluded from the headline
+    mean because they degenerate to N/A (always-1) on a majority of
+    questions:
+    <code>cultural_deference_calibration</code> and <code>eval_awareness</code>.
+    They are included in the per-dimension breakdown for completeness but
+    not in the &ldquo;Mean score&rdquo; column. This matches the
+    methodology used in the source repository's cross-set summary.
+  </p>
+  <p>
+    Sample counts equal questions &times; ranked dimensions
+    (e.g. 12 &times; 11 = 132 for Propensity-Hard). Where the count is lower
+    than expected, the judge omitted a dimension on at least one question,
+    typically because the scenario contained no relevant material.
+  </p>
+  <p>
+    The Sonnet-only Blind Spots Challenging set uses a different question
+    set (a harder mix of original blind-spots seeds and foreign-language
+    variants) and only two models, so its scores are not directly
+    comparable to the other three sets.
+  </p>
+</section>
+<footer class='site-footer'>
+  <p>
+    Source data: <code>evals-gui-results/petri/analysis/&lt;set&gt;/data/animal_welfare_scores.csv</code>.
+    Snapshot generated 2026-05-01. Regenerate with <code>python generate.py</code>.
+  </p>
+</footer>
+</body>
+</html>

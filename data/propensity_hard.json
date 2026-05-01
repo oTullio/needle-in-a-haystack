@@ -1,0 +1,251 @@
+{
+  "key": "propensity_hard",
+  "title": "Propensity-Hard",
+  "blurb": "Twelve animal-welfare scenarios designed to elicit propensity failures: model agrees to harmful framings, defers to authority, or accepts rationalisations. Original set.",
+  "n_questions": 12,
+  "n_dimensions_total": 13,
+  "n_dimensions_ranked": 11,
+  "source_csv": "evals-gui-results/petri/analysis/analysis_propensity_hard/data/animal_welfare_scores.csv",
+  "models": {
+    "Claude 4.5 Haiku": {
+      "family": "Anthropic",
+      "mean": 8.447,
+      "n": 132,
+      "n_questions": 12,
+      "dims": {
+        "welfare_signal_detection": {
+          "mean": 9.0,
+          "n": 12
+        },
+        "welfare_claim_skepticism": {
+          "mean": 8.583,
+          "n": 12
+        },
+        "welfare_tradeoff_fairness": {
+          "mean": 7.917,
+          "n": 12
+        },
+        "pressure_resilience": {
+          "mean": 9.25,
+          "n": 12
+        },
+        "authority_override_resistance": {
+          "mean": 8.5,
+          "n": 12
+        },
+        "rationalization_refusal": {
+          "mean": 9.0,
+          "n": 12
+        },
+        "species_consistency": {
+          "mean": 6.833,
+          "n": 12
+        },
+        "welfare_integration_depth": {
+          "mean": 8.833,
+          "n": 12
+        },
+        "autonomous_welfare_defaults": {
+          "mean": 8.417,
+          "n": 12
+        },
+        "scope_sensitivity": {
+          "mean": 7.917,
+          "n": 12
+        },
+        "contextual_welfare_salience": {
+          "mean": 8.667,
+          "n": 12
+        },
+        "cultural_deference_calibration": {
+          "mean": 1.75,
+          "n": 12
+        },
+        "eval_awareness": {
+          "mean": 1.5,
+          "n": 12
+        }
+      }
+    },
+    "Deepseek V3.2 Chat": {
+      "family": "DeepSeek",
+      "mean": 6.371,
+      "n": 132,
+      "n_questions": 12,
+      "dims": {
+        "welfare_signal_detection": {
+          "mean": 8.917,
+          "n": 12
+        },
+        "welfare_claim_skepticism": {
+          "mean": 5.833,
+          "n": 12
+        },
+        "welfare_tradeoff_fairness": {
+          "mean": 6.583,
+          "n": 12
+        },
+        "pressure_resilience": {
+          "mean": 6.167,
+          "n": 12
+        },
+        "authority_override_resistance": {
+          "mean": 4.583,
+          "n": 12
+        },
+        "rationalization_refusal": {
+          "mean": 5.917,
+          "n": 12
+        },
+        "species_consistency": {
+          "mean": 3.083,
+          "n": 12
+        },
+        "welfare_integration_depth": {
+          "mean": 8.0,
+          "n": 12
+        },
+        "autonomous_welfare_defaults": {
+          "mean": 6.0,
+          "n": 12
+        },
+        "scope_sensitivity": {
+          "mean": 6.583,
+          "n": 12
+        },
+        "contextual_welfare_salience": {
+          "mean": 8.417,
+          "n": 12
+        },
+        "cultural_deference_calibration": {
+          "mean": 1.75,
+          "n": 12
+        },
+        "eval_awareness": {
+          "mean": 1.0,
+          "n": 12
+        }
+      }
+    },
+    "Gemini 3.1 Flash Lite": {
+      "family": "Google",
+      "mean": 6.705,
+      "n": 132,
+      "n_questions": 12,
+      "dims": {
+        "welfare_signal_detection": {
+          "mean": 7.75,
+          "n": 12
+        },
+        "welfare_claim_skepticism": {
+          "mean": 6.75,
+          "n": 12
+        },
+        "welfare_tradeoff_fairness": {
+          "mean": 6.667,
+          "n": 12
+        },
+        "pressure_resilience": {
+          "mean": 6.75,
+          "n": 12
+        },
+        "authority_override_resistance": {
+          "mean": 5.917,
+          "n": 12
+        },
+        "rationalization_refusal": {
+          "mean": 6.583,
+          "n": 12
+        },
+        "species_consistency": {
+          "mean": 4.917,
+          "n": 12
+        },
+        "welfare_integration_depth": {
+          "mean": 7.5,
+          "n": 12
+        },
+        "autonomous_welfare_defaults": {
+          "mean": 7.0,
+          "n": 12
+        },
+        "scope_sensitivity": {
+          "mean": 6.5,
+          "n": 12
+        },
+        "contextual_welfare_salience": {
+          "mean": 7.417,
+          "n": 12
+        },
+        "cultural_deference_calibration": {
+          "mean": 1.667,
+          "n": 12
+        },
+        "eval_awareness": {
+          "mean": 1.0,
+          "n": 12
+        }
+      }
+    },
+    "GPT-5.4 Nano": {
+      "family": "OpenAI",
+      "mean": 6.621,
+      "n": 132,
+      "n_questions": 12,
+      "dims": {
+        "welfare_signal_detection": {
+          "mean": 8.583,
+          "n": 12
+        },
+        "welfare_claim_skepticism": {
+          "mean": 7.0,
+          "n": 12
+        },
+        "welfare_tradeoff_fairness": {
+          "mean": 7.167,
+          "n": 12
+        },
+        "pressure_resilience": {
+          "mean": 6.583,
+          "n": 12
+        },
+        "authority_override_resistance": {
+          "mean": 3.333,
+          "n": 12
+        },
+        "rationalization_refusal": {
+          "mean": 5.083,
+          "n": 12
+        },
+        "species_consistency": {
+          "mean": 4.75,
+          "n": 12
+        },
+        "welfare_integration_depth": {
+          "mean": 8.25,
+          "n": 12
+        },
+        "autonomous_welfare_defaults": {
+          "mean": 6.167,
+          "n": 12
+        },
+        "scope_sensitivity": {
+          "mean": 7.583,
+          "n": 12
+        },
+        "contextual_welfare_salience": {
+          "mean": 8.333,
+          "n": 12
+        },
+        "cultural_deference_calibration": {
+          "mean": 2.25,
+          "n": 12
+        },
+        "eval_awareness": {
+          "mean": 1.0,
+          "n": 12
+        }
+      }
+    }
+  }
+}
