@@ -1,6 +1,4 @@
-/* Petri Animal-Welfare Results — academic / leaderboard look.
- * Minimal color, system fonts, dense tables, generous reading width.
- */
+/* Petri Top-40 Results — academic / leaderboard look. */
 
 :root {
   --fg: #1c1c1c;
@@ -12,11 +10,15 @@
   --row-hover: #eef2f6;
   --link: #2a4d8f;
   --link-hover: #11305f;
+  --tab-active-bg: #ffffff;
+  --tab-active-border: #2a4d8f;
+  --tab-bg: #f0f0ee;
+  --positive: #1d6e3a;
+  --negative: #8a1d1d;
   --max-width: 1080px;
 }
 
 * { box-sizing: border-box; }
-
 html { -webkit-text-size-adjust: 100%; }
 
 body {
@@ -47,76 +49,73 @@ code {
   border-radius: 3px;
 }
 
+img { max-width: 100%; height: auto; display: block; }
+
 /* ----- Layout ----- */
 .site-header,
-section,
+.section,
 .site-footer {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 1.5rem 1.75rem;
+  padding: 1rem 1.75rem;
 }
 
 .site-header {
-  padding-top: 2.5rem;
-  padding-bottom: 1.25rem;
+  padding-top: 1.5rem;
+  padding-bottom: 0.6rem;
   border-bottom: 1px solid var(--rule);
-}
-
-.site-header h1 {
-  margin: 0 0 0.5rem;
-  font-size: 1.7rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-.site-header .lede {
-  margin: 0 0 1.25rem;
-  color: var(--muted);
-  max-width: 60ch;
 }
 
 nav.toc {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem 1.1rem;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
 }
 nav.toc a { color: var(--muted); }
 nav.toc a:hover { color: var(--link-hover); }
 
-section {
-  padding-top: 2.25rem;
-  padding-bottom: 0.75rem;
+main { padding-bottom: 1rem; }
+
+.section {
+  padding-top: 1.6rem;
+  padding-bottom: 0.5rem;
+}
+.section + .section {
+  border-top: 1px solid var(--rule-soft);
+  margin-top: 0.5rem;
 }
 
-section h2 {
-  font-size: 1.2rem;
+.section h1 {
+  font-size: 1.55rem;
   font-weight: 600;
+  letter-spacing: -0.01em;
   margin: 0 0 0.6rem;
-  border-bottom: 1px solid var(--rule);
-  padding-bottom: 0.35rem;
 }
-
-section h3 {
+.section h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 1.4rem 0 0.5rem;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.3rem;
+}
+.section h3 {
   font-size: 0.95rem;
   font-weight: 600;
-  margin: 1.5rem 0 0.5rem;
+  margin: 1.2rem 0 0.4rem;
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
-
-.blurb {
-  margin: 0.4rem 0 0.6rem;
-  max-width: 70ch;
-  color: var(--fg);
+.section p {
+  margin: 0.5rem 0;
+  max-width: 72ch;
 }
-
-.meta {
-  margin: 0 0 0.5rem;
-  color: var(--muted);
-  font-size: 0.88rem;
+.section ul, .section ol {
+  margin: 0.4rem 0 0.6rem 1.4rem;
+  max-width: 72ch;
 }
+.section li { margin: 0.15rem 0; }
 
 /* ----- Tables ----- */
 table {
@@ -124,6 +123,7 @@ table {
   width: 100%;
   font-size: 0.94rem;
   font-variant-numeric: tabular-nums;
+  margin: 0.6rem 0 1rem;
 }
 
 th, td {
@@ -131,81 +131,104 @@ th, td {
   text-align: left;
   border-bottom: 1px solid var(--rule-soft);
 }
-
 thead th {
   border-bottom: 1.5px solid var(--rule);
   font-weight: 600;
-  color: var(--fg);
   background: #fafafa;
-  position: sticky;
-  top: 0;
   white-space: nowrap;
 }
-
 tbody tr:nth-child(even) td { background: var(--row-alt); }
 tbody tr:hover td { background: var(--row-hover); }
 
-td.rank {
-  width: 2.6rem;
-  color: var(--muted);
-  font-variant-numeric: tabular-nums;
-}
-td.model { font-weight: 500; }
-td.family {
-  color: var(--muted);
-  font-size: 0.9rem;
-}
+td.rank   { width: 2.6rem; color: var(--muted); }
+td.model  { font-weight: 500; }
+td.family { color: var(--muted); font-size: 0.9rem; }
 td.score, th.score, td.count, th.count {
   text-align: right;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
-td.score { white-space: nowrap; }
 td.delta { color: var(--muted); }
+td.delta.positive { color: var(--positive); }
+td.delta.negative { color: var(--negative); }
 
-/* Per-dimension breakdown table — tighter, scrollable on small screens. */
-.dims {
-  font-size: 0.85rem;
-}
-.dims th, .dims td {
-  padding: 0.35rem 0.5rem;
-}
-.dims thead th {
-  font-size: 0.72rem;
-  font-weight: 600;
-  text-transform: none;
-  letter-spacing: 0;
-  vertical-align: bottom;
-  line-height: 1.2;
+/* Markdown-rendered tables (e.g. methodology). */
+.section table:not(.leaderboard):not(.family-comparison) {
+  font-size: 0.92rem;
 }
 
-.scroll-x {
-  overflow-x: auto;
+/* ----- Image tabs ----- */
+.image-tabs {
+  margin: 1rem 0 1.4rem;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--tab-bg);
+}
+.image-tab-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border-bottom: 1px solid var(--rule);
+  background: var(--tab-bg);
+  border-radius: 4px 4px 0 0;
+}
+.image-tab-btn {
+  appearance: none;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--rule);
+  padding: 0.55rem 0.95rem;
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 80ms, background 80ms, border-bottom-color 80ms;
+}
+.image-tab-btn:hover { color: var(--fg); }
+.image-tab-btn.is-active {
+  color: var(--fg);
+  background: var(--tab-active-bg);
+  border-bottom-color: var(--tab-active-border);
+  font-weight: 500;
+}
+.image-tab-btn:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: -2px;
+}
+
+.image-tab-panel {
   margin: 0;
-  -webkit-overflow-scrolling: touch;
+  padding: 1rem;
+  background: var(--tab-active-bg);
+  border-radius: 0 0 4px 4px;
+}
+.image-tab-panel[hidden] { display: none; }
+.image-tab-caption {
+  margin-top: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+  text-align: center;
 }
 
-/* ----- Summary table emphasis ----- */
-.crossset td.score:not(.delta) { font-weight: 500; }
-
-/* ----- Methodology / footer ----- */
-.methodology p {
-  max-width: 72ch;
-  margin: 0.5rem 0;
-}
+/* ----- Footer ----- */
 .site-footer {
   border-top: 1px solid var(--rule);
   margin-top: 2rem;
   padding-top: 1rem;
-  padding-bottom: 2.5rem;
+  padding-bottom: 2rem;
   font-size: 0.85rem;
   color: var(--muted);
 }
 
 /* ----- Small screens ----- */
 @media (max-width: 720px) {
-  .site-header { padding: 2rem 1rem 1rem; }
-  section, .site-footer { padding-left: 1rem; padding-right: 1rem; }
-  table, .dims { font-size: 0.85rem; }
+  .site-header, .section, .site-footer {
+    padding-left: 1rem; padding-right: 1rem;
+  }
+  table { font-size: 0.85rem; }
   td.family { display: none; }
-  th:nth-child(3):not(.dims th) { display: none; }
+  th:nth-child(3) { display: none; }
+  .image-tab-btn { padding: 0.5rem 0.65rem; font-size: 0.85rem; }
 }

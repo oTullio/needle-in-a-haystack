@@ -1,0 +1,42 @@
+[
+  {
+    "family": "Anthropic",
+    "newer_model": "Claude Haiku 4.5",
+    "newer_mean": 7.117,
+    "older_model": "Claude Sonnet 4",
+    "older_mean": 5.912,
+    "delta": 1.205
+  },
+  {
+    "family": "OpenAI",
+    "newer_model": "GPT-5.4 Nano",
+    "newer_mean": 5.718,
+    "older_model": "GPT-4.1 Nano",
+    "older_mean": 4.059,
+    "delta": 1.659
+  },
+  {
+    "family": "DeepSeek",
+    "newer_model": "DeepSeek V4 Flash",
+    "newer_mean": 6.01,
+    "older_model": null,
+    "older_mean": null,
+    "delta": null
+  },
+  {
+    "family": "Google",
+    "newer_model": "Gemini 3.1 Flash Lite",
+    "newer_mean": 5.492,
+    "older_model": "Gemini 2.5 Flash Lite",
+    "older_mean": 5.346,
+    "delta": 0.146
+  },
+  {
+    "family": "xAI",
+    "newer_model": "Grok 4.1 Fast Reasoning",
+    "newer_mean": 4.905,
+    "older_model": "Grok 3 Mini",
+    "older_mean": 5.206,
+    "delta": -0.301
+  }
+]

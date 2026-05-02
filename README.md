@@ -1,79 +1,100 @@
 # petri-results-site
 
-Static webpage that presents per-model results from
-[petri](https://github.com/safety-research/petri) runs of four animal-welfare
-evaluation sets, in the spirit of public benchmark leaderboards
-(e.g. Compassion in Machine Learning's AHB / MORU / TAC pages).
+Static webpage presenting results from the
+[petri](https://github.com/safety-research/petri) **top-40 animal-welfare
+benchmark**: five frontier models on the same 40 scenarios, plus a
+generational comparison against the previous release in each model family.
 
-The page is plain HTML + CSS, deployable to GitHub Pages with no build step.
+The page is plain HTML + CSS + a single small JS file. All prose lives in
+editable markdown files under `content/`, all images live next to them in
+`content/images/`, and all numbers are pulled from the sibling
+`evals-gui-results` repository.
 
-## What's on the page
+## Editing the page
 
-- A cross-set summary comparing the four Haiku-tier models on the two main sets
-  (Propensity-Hard and Blind Spots) with the BS&minus;P delta.
-- One section per evaluation set:
-  - **Propensity-Hard** &mdash; 12 scenarios designed to elicit propensity failures.
-  - **Blind Spots** &mdash; 18 scenarios targeting known welfare blind spots.
-  - **Foreign Language** &mdash; 20 questions translated into non-Western languages.
-  - **Blind Spots Challenging (Sonnet only)** &mdash; 20 harder questions run on
-    Sonnet 4 vs Sonnet 4.6.
-- Each section has a leaderboard ordered by mean score plus a per-dimension
-  breakdown table.
-- A short methodology note documenting which dimensions are excluded from the
-  headline mean and why.
+Prose is in `content/*.md`. Edit the markdown directly and re-run
+`python generate.py` to regenerate `index.html`. Each markdown file maps to
+one section on the page:
 
-## Where the data comes from
+| File | Section |
+|------|---------|
+| `content/intro.md` | Overview |
+| `content/leaderboard.md` | Cross-model leaderboard + image-tabs gallery |
+| `content/family_comparison.md` | Generational comparison table |
+| `content/methodology.md` | Methodology |
 
-Source CSVs live in the sibling `evals-gui-results` repository at:
+Two placeholders in the markdown are filled in by the generator:
+
+- `{{ leaderboard }}` &mdash; the auto-rendered cross-model leaderboard.
+- `{{ family_table }}` &mdash; the auto-rendered generational comparison
+  table.
+
+Everything else is plain markdown (headings, lists, tables, code blocks,
+links, images).
+
+## Image tabs
+
+To group multiple images behind a tab switcher, drop a fenced block of type
+`image-tabs` into any markdown file. Each non-empty line inside the block
+defines one tab, fields separated by `|`:
 
 ```
-../evals-gui-results/petri/analysis/<set>/data/animal_welfare_scores.csv
+\`\`\`image-tabs
+Tab label | images/foo.png | optional caption shown under the image
+Other tab | images/bar.png
+\`\`\`
 ```
 
-Each CSV has columns `model,question,dimension,score`. The CSVs are produced by
-the data-extraction notebooks in that repo from petri `.eval` archives.
+The first tab is shown by default; clicking another tab switches to it,
+arrow keys cycle. Style is shared across all tab groups via `.image-tabs`
+in `style.css`.
 
-## Methodology
+Images for the tabs (and any other `![alt](images/...)` markdown image
+reference) live in `content/images/`. They are served from there directly,
+so they preview in any markdown viewer (VS Code, GitHub, etc.) as well as
+in the rendered page.
 
-The leaderboard mean for a model on a set is the simple mean of all judge
-scores across every (question, dimension) pair, with two dimensions excluded:
-`cultural_deference_calibration` and `eval_awareness`. Both degenerate to N/A
-(judge returns 1) on a majority of questions, which would otherwise distort the
-mean. This matches the methodology used in the source repository's cross-set
-summary (`evals-gui-results/petri/analysis/analysis_crossset/02_per_model_summary.py`).
+## Where the numbers come from
 
-The judge is `google/gemini-3.1-flash-lite-preview` applied via the petri
-`animal_welfare_judge` dimension set; the auditor model is
-`google/gemini-3-flash-preview`. Both are held fixed across all targets within
-a set.
+| Quantity | Source |
+|---|---|
+| Newer-model per-question scores | `evals-gui-results/petri/analysis/benchmark_loop/create_crossmodel_graphs_v4.py` (matches chart `12_v4_crossmodel_means.png`) |
+| Older-model per-question scores | `evals-gui-results/petri/analysis/benchmark_loop/data/older_model_scores.csv` |
+| Welfare aggregate | mean of 12 welfare dimensions (excludes the meta dimension `eval_awareness`) |
+| Headline mean | mean of the 40 per-question welfare aggregates |
+
+JSON snapshots are committed under `data/` so the site is self-contained.
+They are regenerated whenever you run `generate.py`.
 
 ## Files
 
 ```
-generate.py                  build script (stdlib only)
-style.css                    page styles
-index.html                   pre-rendered page (regenerated by generate.py)
-data/<set>.json              per-set leaderboard data
-data/crossset.json           summary across the two main sets
-data/dimensions.json         dimension keys and exclusion list
+content/
+  intro.md, leaderboard.md, family_comparison.md, methodology.md
+  images/
+    crossmodel_means.png, heatmap.png,
+    family_overall.png, improvement_ranking.png
+data/
+  newer_models.json, older_models.json,
+  family_comparison.json, config.json
+generate.py            build script
+requirements.txt       sole dependency: markdown
+style.css              page styles (incl. tab styles)
+script.js              tab switcher (vanilla, ~30 lines)
+index.html             pre-rendered page (regenerated by generate.py)
 ```
 
-The `data/*.json` files are committed snapshots so the site is self-contained.
-They are regenerated from the source CSVs whenever you run `generate.py`.
+## Setup and regeneration
 
-## Regenerating after new runs
+```
+pip install -r requirements.txt
+python generate.py
+```
 
-1. Make sure the sibling `evals-gui-results` repo has updated CSVs for the
-   sets you care about. Run its data-extraction notebooks (`01_data_extraction.ipynb`
-   in each `analysis_<set>/` directory) if needed.
-2. From this repo:
-   ```
-   python generate.py
-   ```
-3. Commit the changes to `data/*.json` and `index.html`.
-
-To add a new set, append an entry to the `SETS` list at the top of
-`generate.py` (set key, title, subdir, question count, blurb) and rerun.
+The generator imports `create_crossmodel_graphs_v4.py` from the sibling
+`evals-gui-results` repo to read newer-model scores, so make sure the
+sibling clone is present and on the right commit. (The script's
+chart-rendering side effects are stubbed out at import time.)
 
 ## Local preview
 
@@ -87,6 +108,6 @@ then visit <http://localhost:8000>.
 
 ## Deploying to GitHub Pages
 
-This repo is structured for the simplest possible Pages setup: push to
-`main` and enable Pages with the source set to "Deploy from a branch
-&rarr; main / (root)". No build action required.
+Push to `main` and enable Pages with the source set to "Deploy from a
+branch &rarr; main / (root)". No build action required &mdash; `index.html`
+is committed.

@@ -1,0 +1,23 @@
+{
+  "n_questions": 40,
+  "welfare_dims": [
+    "welfare_signal_detection",
+    "welfare_claim_skepticism",
+    "welfare_tradeoff_fairness",
+    "pressure_resilience",
+    "authority_override_resistance",
+    "rationalization_refusal",
+    "species_consistency",
+    "welfare_integration_depth",
+    "autonomous_welfare_defaults",
+    "scope_sensitivity",
+    "contextual_welfare_salience",
+    "cultural_deference_calibration"
+  ],
+  "meta_dims": [
+    "eval_awareness"
+  ],
+  "auditor": "google/gemini-3-flash-preview",
+  "judge": "google/gemini-3-flash-preview",
+  "judge_dim_set": "animal_welfare_judge_v2"
+}
