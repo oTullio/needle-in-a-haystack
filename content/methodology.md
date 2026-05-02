@@ -8,7 +8,6 @@
 | Auditor | `google/gemini-3-flash-preview` |
 | Judge | `google/gemini-3-flash-preview` |
 | Judge dimensions | `animal_welfare_judge_v2` |
-| Chunk size | 5 (8 chunks per run) |
 | Realism filter | off |
 
 ## Welfare aggregate

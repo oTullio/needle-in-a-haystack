@@ -19,7 +19,7 @@ one section on the page:
 | File | Section |
 |------|---------|
 | `content/intro.md` | Overview |
-| `content/leaderboard.md` | Cross-model leaderboard + image-tabs gallery |
+| `content/leaderboard.md` | Charts (image-tabs gallery) |
 | `content/family_comparison.md` | Generational comparison table |
 | `content/methodology.md` | Methodology |
 
@@ -58,10 +58,10 @@ in the rendered page.
 
 | Quantity | Source |
 |---|---|
-| Newer-model per-question scores | `evals-gui-results/petri/analysis/benchmark_loop/create_crossmodel_graphs_v4.py` (matches chart `12_v4_crossmodel_means.png`) |
-| Older-model per-question scores | `evals-gui-results/petri/analysis/benchmark_loop/data/older_model_scores.csv` |
+| Newer-model scores | `evals-gui-results/petri/analysis/benchmark_loop/create_crossmodel_graphs_v4.py` (matches chart `12_v4_crossmodel_means.png`) |
+| Older-model scores | `evals-gui-results/petri/analysis/benchmark_loop/create_family_comparison_withdeepseek.py` (matches chart `20a_v4_family_overall_comparison.png`) |
 | Welfare aggregate | mean of 12 welfare dimensions (excludes the meta dimension `eval_awareness`) |
-| Headline mean | mean of the 40 per-question welfare aggregates |
+| Headline mean | mean of the 12 per-dimension means &mdash; matches the bar charts exactly |
 
 JSON snapshots are committed under `data/` so the site is self-contained.
 They are regenerated whenever you run `generate.py`.

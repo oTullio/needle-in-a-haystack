@@ -10,7 +10,7 @@
 <header class='site-header'>
   <nav class='toc'>
     <a href='#intro'>Overview</a>
-    <a href='#leaderboard'>Leaderboard</a>
+    <a href='#leaderboard'>Charts</a>
     <a href='#family_comparison'>Generational comparison</a>
     <a href='#methodology'>Methodology</a>
   </nav>
@@ -34,22 +34,8 @@ dimension set <code>animal_welfare_judge_v2</code>.</p>
   </article>
 
   <article id='leaderboard' class='section'>
-<h1>Cross-Model Leaderboard</h1>
-<p>Five frontier models on the same 40 scenarios. Mean is the average over all
-40 questions; each per-question score is itself the mean of the 12 welfare
-dimensions.</p>
-<table class='leaderboard'>
-  <thead><tr><th>#</th><th>Model</th><th>Family</th><th>Mean</th><th>Questions</th><th>Dimensions</th></tr></thead>
-  <tbody>
-      <tr><td class='rank'>1</td><td class='model'>Claude Haiku 4.5</td><td class='family'>Anthropic</td><td class='score'>7.12</td><td class='count'>40</td><td class='count'>12</td></tr>
-      <tr><td class='rank'>2</td><td class='model'>DeepSeek V4 Flash</td><td class='family'>DeepSeek</td><td class='score'>6.01</td><td class='count'>40</td><td class='count'>12</td></tr>
-      <tr><td class='rank'>3</td><td class='model'>GPT-5.4 Nano</td><td class='family'>OpenAI</td><td class='score'>5.72</td><td class='count'>40</td><td class='count'>12</td></tr>
-      <tr><td class='rank'>4</td><td class='model'>Gemini 3.1 Flash Lite</td><td class='family'>Google</td><td class='score'>5.49</td><td class='count'>40</td><td class='count'>12</td></tr>
-      <tr><td class='rank'>5</td><td class='model'>Grok 4.1 Fast Reasoning</td><td class='family'>xAI</td><td class='score'>4.91</td><td class='count'>40</td><td class='count'>12</td></tr>
-  </tbody>
-</table>
-<h2>Visual summary</h2>
-<p>Four views of the same underlying data.</p>
+<h1>Charts</h1>
+<p>Four views of the same top-40 run.</p>
 <div class='image-tabs' id='tabs-1'>
   <div class='image-tab-list' role='tablist'>
     <button class='image-tab-btn is-active' role='tab' aria-selected='true' data-target='tabs-1-panel-0' id='tabs-1-tab-0'>Cross-model means</button>
@@ -59,7 +45,7 @@ dimensions.</p>
   </div>
   <figure class='image-tab-panel is-active' role='tabpanel' id='tabs-1-panel-0' aria-labelledby='tabs-1-tab-0'>
     <img src='content/images/crossmodel_means.png' alt='Cross-model means'>
-    <figcaption class='image-tab-caption'>Per-model overall mean across the 40 questions, with model-family colors.</figcaption>
+    <figcaption class='image-tab-caption'>Per-model overall mean across the 40 questions.</figcaption>
   </figure>
   <figure class='image-tab-panel' role='tabpanel' id='tabs-1-panel-1' aria-labelledby='tabs-1-tab-1' hidden>
     <img src='content/images/heatmap.png' alt='Score heatmap'>
@@ -67,11 +53,11 @@ dimensions.</p>
   </figure>
   <figure class='image-tab-panel' role='tabpanel' id='tabs-1-panel-2' aria-labelledby='tabs-1-tab-2' hidden>
     <img src='content/images/family_overall.png' alt='Family newer-vs-older'>
-    <figcaption class='image-tab-caption'>Side-by-side comparison of newer and older generation within each model family.</figcaption>
+    <figcaption class='image-tab-caption'>Within-family generational comparison.</figcaption>
   </figure>
   <figure class='image-tab-panel' role='tabpanel' id='tabs-1-panel-3' aria-labelledby='tabs-1-tab-3' hidden>
     <img src='content/images/improvement_ranking.png' alt='Improvement ranking'>
-    <figcaption class='image-tab-caption'>Per-family generational improvement, ranked by the size of the newer-vs-older gap.</figcaption>
+    <figcaption class='image-tab-caption'>Per-family generational improvement, ranked.</figcaption>
   </figure>
 </div>
   </article>
@@ -86,8 +72,8 @@ the newer model scored higher on the welfare aggregate.</p>
   <tbody>
       <tr><td class='family'>Anthropic</td><td class='model'>Claude Haiku 4.5</td><td class='score'>7.12</td><td class='model'>Claude Sonnet 4</td><td class='score'>5.91</td><td class='score delta positive'>1.21</td></tr>
       <tr><td class='family'>OpenAI</td><td class='model'>GPT-5.4 Nano</td><td class='score'>5.72</td><td class='model'>GPT-4.1 Nano</td><td class='score'>4.06</td><td class='score delta positive'>1.66</td></tr>
-      <tr><td class='family'>DeepSeek</td><td class='model'>DeepSeek V4 Flash</td><td class='score'>6.01</td><td class='model'>&mdash;</td><td class='score'>&mdash;</td><td class='score delta'>&mdash;</td></tr>
-      <tr><td class='family'>Google</td><td class='model'>Gemini 3.1 Flash Lite</td><td class='score'>5.49</td><td class='model'>Gemini 2.5 Flash Lite</td><td class='score'>5.35</td><td class='score delta positive'>0.15</td></tr>
+      <tr><td class='family'>DeepSeek</td><td class='model'>DeepSeek V4 Flash</td><td class='score'>6.01</td><td class='model'>DeepSeek V3.2 Chat</td><td class='score'>5.43</td><td class='score delta positive'>0.58</td></tr>
+      <tr><td class='family'>Google</td><td class='model'>Gemini 3.1 Flash Lite</td><td class='score'>5.49</td><td class='model'>Gemini 2.5 FL</td><td class='score'>5.35</td><td class='score delta positive'>0.15</td></tr>
       <tr><td class='family'>xAI</td><td class='model'>Grok 4.1 Fast Reasoning</td><td class='score'>4.91</td><td class='model'>Grok 3 Mini</td><td class='score'>5.21</td><td class='score delta negative'>-0.30</td></tr>
   </tbody>
 </table>
@@ -105,8 +91,8 @@ the newer model scored higher on the welfare aggregate.</p>
 <li><strong>xAI</strong> regressed slightly. Grok 4.1 Fast Reasoning scored lower than Grok
   3 Mini overall, with the largest regressions on pressure resilience and
   rationalization refusal.</li>
-<li><strong>DeepSeek</strong> is shown for reference only; no prior-generation run on this
-  seed set is available.</li>
+<li><strong>DeepSeek</strong> improved modestly. V4 Flash scored about 0.6 points higher
+  than V3.2 Chat overall.</li>
 </ul>
 <p>Per-dimension deltas live in
 <code>evals-gui-results/petri/analysis/benchmark_loop/HANDOFF_family_comparison.md</code>
@@ -139,10 +125,6 @@ and the family-comparison charts in the same directory.</p>
 <tr>
 <td>Judge dimensions</td>
 <td><code>animal_welfare_judge_v2</code></td>
-</tr>
-<tr>
-<td>Chunk size</td>
-<td>5 (8 chunks per run)</td>
 </tr>
 <tr>
 <td>Realism filter</td>

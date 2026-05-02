@@ -19,15 +19,15 @@
     "family": "DeepSeek",
     "newer_model": "DeepSeek V4 Flash",
     "newer_mean": 6.01,
-    "older_model": null,
-    "older_mean": null,
-    "delta": null
+    "older_model": "DeepSeek V3.2 Chat",
+    "older_mean": 5.429,
+    "delta": 0.581
   },
   {
     "family": "Google",
     "newer_model": "Gemini 3.1 Flash Lite",
     "newer_mean": 5.492,
-    "older_model": "Gemini 2.5 Flash Lite",
+    "older_model": "Gemini 2.5 FL",
     "older_mean": 5.346,
     "delta": 0.146
   },

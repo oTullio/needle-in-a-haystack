@@ -20,8 +20,8 @@ the newer model scored higher on the welfare aggregate.
 - **xAI** regressed slightly. Grok 4.1 Fast Reasoning scored lower than Grok
   3 Mini overall, with the largest regressions on pressure resilience and
   rationalization refusal.
-- **DeepSeek** is shown for reference only; no prior-generation run on this
-  seed set is available.
+- **DeepSeek** improved modestly. V4 Flash scored about 0.6 points higher
+  than V3.2 Chat overall.
 
 Per-dimension deltas live in
 `evals-gui-results/petri/analysis/benchmark_loop/HANDOFF_family_comparison.md`

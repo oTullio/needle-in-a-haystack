@@ -80,8 +80,8 @@ ALL_DIMS = WELFARE_DIMS + META_DIMS
 FAMILY_PAIRS = [
     {"family": "Anthropic", "newer": "Claude Haiku 4.5", "older": "Claude Sonnet 4"},
     {"family": "OpenAI", "newer": "GPT-5.4 Nano", "older": "GPT-4.1 Nano"},
-    {"family": "DeepSeek", "newer": "DeepSeek V4 Flash", "older": None},
-    {"family": "Google", "newer": "Gemini 3.1 Flash Lite", "older": "Gemini 2.5 Flash Lite"},
+    {"family": "DeepSeek", "newer": "DeepSeek V4 Flash", "older": "DeepSeek V3.2 Chat"},
+    {"family": "Google", "newer": "Gemini 3.1 Flash Lite", "older": "Gemini 2.5 FL"},
     {"family": "xAI", "newer": "Grok 4.1 Fast Reasoning", "older": "Grok 3 Mini"},
 ]
 
@@ -91,8 +91,9 @@ MODEL_FAMILY = {
     "GPT-5.4 Nano": "OpenAI",
     "GPT-4.1 Nano": "OpenAI",
     "DeepSeek V4 Flash": "DeepSeek",
+    "DeepSeek V3.2 Chat": "DeepSeek",
     "Gemini 3.1 Flash Lite": "Google",
-    "Gemini 2.5 Flash Lite": "Google",
+    "Gemini 2.5 FL": "Google",
     "Grok 4.1 Fast Reasoning": "xAI",
     "Grok 3 Mini": "xAI",
 }
@@ -147,34 +148,14 @@ def load_older_scores() -> tuple[
     dict[str, dict[str, float]],  # per-question
     dict[str, dict[str, float]],  # per-dimension
 ]:
-    """Per-model per-question AND per-dimension welfare-only means for the 4
-    older models, derived from `older_model_scores.csv` (one row per
-    model x question, 13 dim columns).
+    """Per-model per-question AND per-dimension welfare-only means for the 5
+    older-generation models, pulled from
+    `create_family_comparison_withdeepseek.py`. Headline mean = mean of the
+    12 dim means (matches chart `20a_v4_family_overall_comparison.png`).
     """
-    csv_path = LOOP_DIR / "data" / "older_model_scores.csv"
-    raw: dict[str, dict[str, dict[str, float]]] = {}  # model -> q -> dim -> v
-    with csv_path.open(newline="", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        for r in reader:
-            model = r["model"]
-            qid = r["question"]
-            row: dict[str, float] = {}
-            for d in WELFARE_DIMS:
-                try:
-                    row[d] = float(r[d])
-                except (KeyError, ValueError):
-                    pass
-            raw.setdefault(model, {})[qid] = row
-    per_q: dict[str, dict[str, float]] = {}
-    per_d: dict[str, dict[str, float]] = {}
-    for model, qmap in raw.items():
-        per_q[model] = {q: round(mean(d.values()), 2) for q, d in qmap.items() if d}
-        dim_acc: dict[str, list[float]] = {d: [] for d in WELFARE_DIMS}
-        for d in qmap.values():
-            for dim, v in d.items():
-                dim_acc[dim].append(v)
-        per_d[model] = {dim: round(mean(vs), 2) for dim, vs in dim_acc.items() if vs}
-    return per_q, per_d
+    script = LOOP_DIR / "create_family_comparison_withdeepseek.py"
+    mod = _load_module(script, "loop_family")
+    return dict(mod.older_question_scores), dict(mod.older_dim_scores)
 
 
 def newer_model_summary(
@@ -435,7 +416,7 @@ PAGE_TMPL = """\
 <header class='site-header'>
   <nav class='toc'>
     <a href='#intro'>Overview</a>
-    <a href='#leaderboard'>Leaderboard</a>
+    <a href='#leaderboard'>Charts</a>
     <a href='#family_comparison'>Generational comparison</a>
     <a href='#methodology'>Methodology</a>
   </nav>
