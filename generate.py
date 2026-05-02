@@ -308,9 +308,15 @@ IMAGE_TABS_RE = re.compile(
     r"^```image-tabs\s*\n(.*?)\n```\s*$",
     re.MULTILINE | re.DOTALL,
 )
+TRANSCRIPT_RE = re.compile(
+    r"^```transcript(?P<attrs>[^\n]*)\n(?P<body>.*?)\n```\s*$",
+    re.MULTILINE | re.DOTALL,
+)
+ATTR_RE = re.compile(r'(\w+)=(?:"([^"]*)"|(\S+))')
 
 # Counter to give each tab group a unique id.
 _TAB_GROUP_COUNTER = {"n": 0}
+_TRANSCRIPT_COUNTER = {"n": 0}
 
 
 def _render_image_tabs(block_body: str) -> str:
@@ -364,20 +370,64 @@ def _render_image_tabs(block_body: str) -> str:
     )
 
 
-def render_markdown_file(path: Path, placeholders: dict[str, str]) -> str:
-    raw = path.read_text(encoding="utf-8")
+def _parse_attrs(s: str) -> dict[str, str]:
+    return {m.group(1): (m.group(2) if m.group(2) is not None else m.group(3))
+            for m in ATTR_RE.finditer(s)}
 
-    # Pre-process image-tabs fenced blocks BEFORE markdown to keep them as raw
-    # HTML (markdown leaves <div>...</div> top-level blocks alone).
-    def sub(m: re.Match) -> str:
-        return _render_image_tabs(m.group(1))
 
-    raw = IMAGE_TABS_RE.sub(sub, raw)
-
-    md = markdown.Markdown(
+def _md_engine() -> markdown.Markdown:
+    return markdown.Markdown(
         extensions=["tables", "fenced_code", "attr_list", "sane_lists"],
         output_format="html5",
     )
+
+
+def _render_transcript(attrs_str: str, excerpt_md: str) -> str:
+    _TRANSCRIPT_COUNTER["n"] += 1
+    n = _TRANSCRIPT_COUNTER["n"]
+    attrs = _parse_attrs(attrs_str)
+    slug = attrs.get("slug", f"transcript-{n}")
+    title = attrs.get("title", slug)
+    source = attrs.get("source", "")
+
+    excerpt_html = _md_engine().convert(excerpt_md)
+
+    full_path = CONTENT_DIR / "transcripts" / f"{slug}.md"
+    if full_path.exists():
+        full_html = _md_engine().convert(full_path.read_text(encoding="utf-8"))
+    else:
+        full_html = "<p><em>Full transcript not found.</em></p>"
+
+    tpl_id = f"transcript-{slug}"
+    return (
+        f"<div class='transcript-card'>\n"
+        f"  <button class='transcript-trigger' type='button' "
+        f"data-template='{tpl_id}' "
+        f"data-title='{html.escape(title)}' "
+        f"data-source='{html.escape(source)}'>\n"
+        f"    <div class='transcript-excerpt'>{excerpt_html}</div>\n"
+        f"    <div class='transcript-meta'>"
+        f"<span class='transcript-source'>{html.escape(source)}</span>"
+        f"<span class='transcript-more'>Read full transcript &rarr;</span>"
+        f"</div>\n"
+        f"  </button>\n"
+        f"</div>\n"
+        f"<template id='{tpl_id}'>{full_html}</template>"
+    )
+
+
+def render_markdown_file(path: Path, placeholders: dict[str, str]) -> str:
+    raw = path.read_text(encoding="utf-8")
+
+    # Pre-process custom fenced blocks BEFORE markdown so they stay as raw
+    # HTML (markdown leaves <div>...</div> top-level blocks alone).
+    raw = IMAGE_TABS_RE.sub(lambda m: _render_image_tabs(m.group(1)), raw)
+    raw = TRANSCRIPT_RE.sub(
+        lambda m: _render_transcript(m.group("attrs"), m.group("body")),
+        raw,
+    )
+
+    md = _md_engine()
     rendered = md.convert(raw)
 
     # Substitute placeholders. Use html-safe lookups.
@@ -420,6 +470,7 @@ PAGE_TMPL = """\
     <a href='#family_comparison'>Generational comparison</a>
     <a href='#foreign_language'>Foreign language</a>
     <a href='#bloom'>Bloom</a>
+    <a href='#transcripts'>Transcripts</a>
     <a href='#methodology'>Methodology</a>
   </nav>
 </header>
@@ -443,6 +494,10 @@ PAGE_TMPL = """\
 
   <article id='bloom' class='section'>
 {bloom}
+  </article>
+
+  <article id='transcripts' class='section'>
+{transcripts}
   </article>
 
   <article id='methodology' class='section'>
@@ -496,6 +551,7 @@ def main() -> None:
             "family_comparison",
             "foreign_language",
             "bloom",
+            "transcripts",
             "methodology",
         )
     }
@@ -506,6 +562,7 @@ def main() -> None:
         family=sections["family_comparison"],
         foreign_language=sections["foreign_language"],
         bloom=sections["bloom"],
+        transcripts=sections["transcripts"],
         methodology=sections["methodology"],
         today=date.today().isoformat(),
     )
