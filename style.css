@@ -110,11 +110,9 @@ main { padding-bottom: 1rem; }
 }
 .section p {
   margin: 0.55rem 0;
-  max-width: 68ch;
 }
 .section ul, .section ol {
   margin: 0.4rem 0 0.6rem 1.4rem;
-  max-width: 68ch;
 }
 .section li { margin: 0.2rem 0; }
 
@@ -205,6 +203,64 @@ td.delta.negative { color: var(--negative); }
   max-height: 520px;
   width: auto;
   max-width: 100%;
+}
+
+/* Any chart image is click-to-enlarge. */
+.section img { cursor: zoom-in; }
+
+/* ----- Lightbox ----- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 15, 15, 0.94);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms;
+  cursor: zoom-out;
+}
+.lightbox.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.lightbox img {
+  max-width: 96vw;
+  max-height: calc(100vh - 6rem);
+  background: #fff;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  cursor: default;
+}
+.lightbox-caption {
+  margin-top: 0.85rem;
+  color: #ddd;
+  font-size: 0.88rem;
+  text-align: center;
+  max-width: 90vw;
+}
+.lightbox-close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.85rem;
+  appearance: none;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.6rem;
+  line-height: 1;
+  padding: 0.3rem 0.55rem;
+  cursor: pointer;
+  border-radius: 3px;
+  opacity: 0.85;
+}
+.lightbox-close:hover { opacity: 1; background: rgba(255, 255, 255, 0.08); }
+.lightbox-close:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
 }
 .image-tab-caption {
   margin-top: 0.65rem;

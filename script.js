@@ -1,10 +1,6 @@
-/* Image-tab switcher.
- *
- * Activated for every .image-tabs container on the page. Click a tab button
- * to show its corresponding panel and hide the others. Keyboard arrows
- * cycle between tabs (matches the WAI-ARIA tabs pattern).
- */
+/* Image-tab switcher and click-to-enlarge lightbox. */
 (function () {
+  // ----- Tab switcher (one widget per .image-tabs container) -----
   function activate(group, btn) {
     var btns = group.querySelectorAll('.image-tab-btn');
     var panels = group.querySelectorAll('.image-tab-panel');
@@ -25,7 +21,7 @@
     });
   }
 
-  function init(group) {
+  function initTabs(group) {
     var btns = Array.prototype.slice.call(
       group.querySelectorAll('.image-tab-btn')
     );
@@ -42,5 +38,67 @@
     });
   }
 
-  document.querySelectorAll('.image-tabs').forEach(init);
+  document.querySelectorAll('.image-tabs').forEach(initTabs);
+
+  // ----- Lightbox -----
+  // One reusable overlay; populated and shown on demand.
+  var lb = document.createElement('div');
+  lb.className = 'lightbox';
+  lb.setAttribute('role', 'dialog');
+  lb.setAttribute('aria-modal', 'true');
+  lb.setAttribute('aria-hidden', 'true');
+  lb.innerHTML =
+    '<button type="button" class="lightbox-close" aria-label="Close">&times;</button>' +
+    '<img alt="">' +
+    '<div class="lightbox-caption"></div>';
+  document.body.appendChild(lb);
+
+  var lbImg = lb.querySelector('img');
+  var lbCap = lb.querySelector('.lightbox-caption');
+  var lbClose = lb.querySelector('.lightbox-close');
+
+  function openLightbox(src, alt, caption) {
+    lbImg.src = src;
+    lbImg.alt = alt || '';
+    lbCap.textContent = caption || '';
+    lbCap.style.display = caption ? 'block' : 'none';
+    lb.classList.add('is-open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    lbClose.focus();
+  }
+
+  function closeLightbox() {
+    lb.classList.remove('is-open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    // Defer src clear so the fade-out doesn't show a flash of white.
+    setTimeout(function () {
+      if (!lb.classList.contains('is-open')) lbImg.src = '';
+    }, 200);
+  }
+
+  // Click anywhere on the overlay (except the image) closes it.
+  lb.addEventListener('click', function (e) {
+    if (e.target === lb || e.target === lbCap) closeLightbox();
+  });
+  lbClose.addEventListener('click', closeLightbox);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && lb.classList.contains('is-open')) closeLightbox();
+  });
+
+  // Bind every chart image inside content sections.
+  document.querySelectorAll('.section img').forEach(function (img) {
+    img.addEventListener('click', function () {
+      var caption = '';
+      // Prefer an adjacent figcaption if the img is inside a <figure>.
+      var fig = img.closest('figure');
+      if (fig) {
+        var capEl = fig.querySelector('figcaption');
+        if (capEl) caption = capEl.textContent.trim();
+      }
+      openLightbox(img.currentSrc || img.src, img.alt, caption);
+    });
+  });
 })();

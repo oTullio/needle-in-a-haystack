@@ -418,6 +418,8 @@ PAGE_TMPL = """\
     <a href='#intro'>Overview</a>
     <a href='#leaderboard'>Charts</a>
     <a href='#family_comparison'>Generational comparison</a>
+    <a href='#foreign_language'>Foreign language</a>
+    <a href='#bloom'>Bloom</a>
     <a href='#methodology'>Methodology</a>
   </nav>
 </header>
@@ -433,6 +435,14 @@ PAGE_TMPL = """\
 
   <article id='family_comparison' class='section'>
 {family}
+  </article>
+
+  <article id='foreign_language' class='section'>
+{foreign_language}
+  </article>
+
+  <article id='bloom' class='section'>
+{bloom}
   </article>
 
   <article id='methodology' class='section'>
@@ -480,13 +490,22 @@ def main() -> None:
 
     sections = {
         name: render_markdown_file(CONTENT_DIR / f"{name}.md", placeholders)
-        for name in ("intro", "leaderboard", "family_comparison", "methodology")
+        for name in (
+            "intro",
+            "leaderboard",
+            "family_comparison",
+            "foreign_language",
+            "bloom",
+            "methodology",
+        )
     }
 
     page = PAGE_TMPL.format(
         intro=sections["intro"],
         leaderboard=sections["leaderboard"],
         family=sections["family_comparison"],
+        foreign_language=sections["foreign_language"],
+        bloom=sections["bloom"],
         methodology=sections["methodology"],
         today=date.today().isoformat(),
     )

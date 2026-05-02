@@ -12,6 +12,8 @@
     <a href='#intro'>Overview</a>
     <a href='#leaderboard'>Charts</a>
     <a href='#family_comparison'>Generational comparison</a>
+    <a href='#foreign_language'>Foreign language</a>
+    <a href='#bloom'>Bloom</a>
     <a href='#methodology'>Methodology</a>
   </nav>
 </header>
@@ -97,6 +99,71 @@ the newer model scored higher on the welfare aggregate.</p>
 <p>Per-dimension deltas live in
 <code>evals-gui-results/petri/analysis/benchmark_loop/HANDOFF_family_comparison.md</code>
 and the family-comparison charts in the same directory.</p>
+  </article>
+
+  <article id='foreign_language' class='section'>
+<h1>Foreign-Language Effects (Preliminary)</h1>
+<p>A separate run translated 20 of the top-40 scenarios into 20 different
+non-Western languages and re-ran the same auditor and judge against the
+same five frontier models. <strong>Each language was used for exactly one
+question</strong>, so any single-language result is confounded with that
+question's content. Treat the per-language deltas as a preliminary
+signal that language affects results in poorly understood ways, not as
+a clean per-language ranking.</p>
+<div class='image-tabs' id='tabs-2'>
+  <div class='image-tab-list' role='tablist'>
+    <button class='image-tab-btn is-active' role='tab' aria-selected='true' data-target='tabs-2-panel-0' id='tabs-2-tab-0'>Mandarin Chinese (all up)</button>
+    <button class='image-tab-btn' role='tab' aria-selected='false' data-target='tabs-2-panel-1' id='tabs-2-tab-1'>Turkish (all down)</button>
+    <button class='image-tab-btn' role='tab' aria-selected='false' data-target='tabs-2-panel-2' id='tabs-2-tab-2'>Mean delta heatmap</button>
+  </div>
+  <figure class='image-tab-panel is-active' role='tabpanel' id='tabs-2-panel-0' aria-labelledby='tabs-2-tab-0'>
+    <img src='content/images/fl_mandarin.png' alt='Mandarin Chinese (all up)'>
+    <figcaption class='image-tab-caption'>Question 5 (Mandarin Chinese): every model scored higher than on the equivalent English question.</figcaption>
+  </figure>
+  <figure class='image-tab-panel' role='tabpanel' id='tabs-2-panel-1' aria-labelledby='tabs-2-tab-1' hidden>
+    <img src='content/images/fl_turkish.png' alt='Turkish (all down)'>
+    <figcaption class='image-tab-caption'>Question 20 (Turkish): every model scored lower than on the equivalent English question.</figcaption>
+  </figure>
+  <figure class='image-tab-panel' role='tabpanel' id='tabs-2-panel-2' aria-labelledby='tabs-2-tab-2' hidden>
+    <img src='content/images/fl_heatmap.png' alt='Mean delta heatmap'>
+    <figcaption class='image-tab-caption'>Per-question, per-model delta vs the matched English run. Cell color shows direction; darker = bigger swing.</figcaption>
+  </figure>
+</div>
+<p>The two cherry-picked questions above bracket the range: in Mandarin
+every model improved, in Turkish every model regressed. Across the
+heatmap as a whole the swings are large in both directions on the same
+model, which suggests the effect is not a simple "model X is better in
+language Y" but an interaction between language, scenario content, and
+something else that this single-question-per-language design cannot
+isolate. A follow-up that holds question content fixed across multiple
+languages would be needed to attribute the effect.</p>
+  </article>
+
+  <article id='bloom' class='section'>
+<h1>Bloom (Trial &mdash; Saturated)</h1>
+<p>Bloom was trialed alongside petri as a second evaluation harness. On the
+animal-welfare-pressure scenarios it produced very little discrimination
+on the frontier Anthropic models &mdash; Claude scores cluster between
+roughly <strong>9.5 and 9.97 out of 10</strong> on the published bloom runs, a
+ceiling effect attributed to bloom's single-pass conversation
+architecture rather than to an absence of failure modes (see the cross-
+methodology notes in the source repo).</p>
+<div class='image-tabs' id='tabs-3'>
+  <div class='image-tab-list' role='tablist'>
+    <button class='image-tab-btn is-active' role='tab' aria-selected='true' data-target='tabs-3-panel-0' id='tabs-3-tab-0'>Old vs new generation</button>
+  </div>
+  <figure class='image-tab-panel is-active' role='tabpanel' id='tabs-3-panel-0' aria-labelledby='tabs-3-tab-0'>
+    <img src='content/images/bloom_old_vs_new.png' alt='Old vs new generation'>
+    <figcaption class='image-tab-caption'>Bloom mean scores on animal-welfare-pressure: newer-generation models cluster near the 10/10 ceiling.</figcaption>
+  </figure>
+</div>
+<p>In short: bloom did not fail, but it does not currently rank the
+frontier models in the way petri does. More work is needed to determine
+why &mdash; whether by tightening the seed scenarios, lengthening the
+auditor pressure, switching the evaluator architecture, or accepting
+that bloom and petri measure different things and reporting both.
+Pointers to the underlying analysis live in
+<code>evals-gui-results/bloom/MASTER_RESULTS.md</code>.</p>
   </article>
 
   <article id='methodology' class='section'>
