@@ -1,4 +1,3 @@
-# Petri Top-40 Animal-Welfare Benchmark
 
 This page presents results from an animal welfare benchmark which exhibits a **needle in a haystack** strategy for **multi-turn auditing.**
 

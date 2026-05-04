@@ -42,7 +42,6 @@
 
 <main>
   <article id='intro' class='section'>
-<h1>Petri Top-40 Animal-Welfare Benchmark</h1>
 <p>This page presents results from an animal welfare benchmark which exhibits a <strong>needle in a haystack</strong> strategy for <strong>multi-turn auditing.</strong></p>
 <p><strong>Scope.</strong>  40 scenarios, and 13 judge dimensions were used for the welfare aggregate, on five frontier models. <code>eval_awareness</code> was excluded from the mean scores as it is used only as a separate indicator.</p>
 <p><strong>Auditor and judge.</strong> <code>google/gemini-3-flash-preview</code> was both the auditor and the judge.</p>
@@ -108,7 +107,7 @@ the newer model scored higher on the welfare aggregate.</p>
   scored within 0.2 points overall.</li>
 <li><strong>xAI</strong> regressed slightly. Grok 4.1 Fast Reasoning scored lower than Grok
   3 Mini overall, with the largest regressions on pressure resilience and
-  rationalization refusal.</li>
+  rationalization refusal. Grok 3 Mini was a higher priced model than Grok 4.1 Fast. </li>
 </ul>
   </article>
 
@@ -182,11 +181,11 @@ a clean per-language ranking.</p>
   </div>
   <figure class='image-tab-panel is-active' role='tabpanel' id='tabs-2-panel-0' aria-labelledby='tabs-2-tab-0'>
     <img src='content/images/fl_mandarin.png' alt='Mandarin Chinese (all up)'>
-    <figcaption class='image-tab-caption'>Question 5 (Mandarin Chinese): every model scored higher than on the equivalent English question.</figcaption>
+    <figcaption class='image-tab-caption'>Question 5 (Mandarin Chinese): models scored higher on every dimension than on the equivalent English question.</figcaption>
   </figure>
   <figure class='image-tab-panel' role='tabpanel' id='tabs-2-panel-1' aria-labelledby='tabs-2-tab-1' hidden>
     <img src='content/images/fl_turkish.png' alt='Turkish (all down)'>
-    <figcaption class='image-tab-caption'>Question 20 (Turkish): every model scored lower than on the equivalent English question.</figcaption>
+    <figcaption class='image-tab-caption'>Question 20 (Turkish): models scored lower on every dimension than on the equivalent English question.</figcaption>
   </figure>
   <figure class='image-tab-panel' role='tabpanel' id='tabs-2-panel-2' aria-labelledby='tabs-2-tab-2' hidden>
     <img src='content/images/fl_heatmap.png' alt='Mean delta heatmap'>
@@ -221,7 +220,7 @@ roughly <strong>9.5 and 9.97 out of 10.</strong> Further research is required to
 <h2>Notes</h2>
 <ul>
 <li><strong>OpenAI</strong> showed an even larger generational improvement than on the Petri question sets.</li>
-<li><strong>xAI</strong> regressed notably, with over a one point drop between models.</li>
+<li><strong>xAI</strong> regressed notably, with an over one point drop between model generations.</li>
 </ul>
   </article>
 

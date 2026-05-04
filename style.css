@@ -406,14 +406,15 @@ td.delta.negative { color: var(--negative); }
   line-height: 1.1;
 }
 .hero-tagline {
-  margin: 0 0 1.4rem;
+  margin: 0 0 0;
   color: var(--muted);
   font-size: 1.05rem;
 }
 
 .signup-form {
-  margin: 0;
+  margin: 3.4rem auto 0;
   max-width: 520px;
+  text-align: center;
 }
 .signup-label {
   display: block;
