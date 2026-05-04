@@ -12,4 +12,4 @@ Old vs new generation | images/bloom_old_vs_new.png | Bloom mean scores on anima
 ## Notes
 
 - **OpenAI** showed an even larger generational improvement than on the Petri question sets.
-- **xAI** regressed notably, with over a one point drop between models.
+- **xAI** regressed notably, with an over one point drop between model generations.

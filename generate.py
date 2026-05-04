@@ -420,7 +420,7 @@ def _render_transcript(attrs_str: str, excerpt_md: str) -> str:
         f"data-source='{html.escape(source)}'>\n"
         f"    <div class='transcript-excerpt'>{excerpt_html}</div>\n"
         f"    <div class='transcript-meta'>"
-        f"<span class='transcript-source'>{html.escape(source)}</span>"
+        f"<span class='transcript-source'>{html.escape(title)}</span>"
         f"<span class='transcript-more'>Read full transcript &rarr;</span>"
         f"</div>\n"
         f"  </button>\n"

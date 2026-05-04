@@ -9,8 +9,8 @@ signal that language affects results in poorly understood ways, not as
 a clean per-language ranking.
 
 ```image-tabs
-Mandarin Chinese (all up) | images/fl_mandarin.png | Question 5 (Mandarin Chinese): every model scored higher than on the equivalent English question.
-Turkish (all down) | images/fl_turkish.png | Question 20 (Turkish): every model scored lower than on the equivalent English question.
+Mandarin Chinese (all up) | images/fl_mandarin.png | Question 5 (Mandarin Chinese): models scored higher on every dimension than on the equivalent English question.
+Turkish (all down) | images/fl_turkish.png | Question 20 (Turkish): models scored lower on every dimension than on the equivalent English question.
 Mean delta heatmap | images/fl_heatmap.png | Per-question, per-model delta vs the matched English run. Cell color shows direction; darker = bigger swing.
 ```
 

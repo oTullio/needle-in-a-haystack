@@ -21,4 +21,4 @@ the newer model scored higher on the welfare aggregate.
   scored within 0.2 points overall.
 - **xAI** regressed slightly. Grok 4.1 Fast Reasoning scored lower than Grok
   3 Mini overall, with the largest regressions on pressure resilience and
-  rationalization refusal.
+  rationalization refusal. Note that Grok Mini is a larger model than Grok Fast. 
