@@ -134,14 +134,96 @@
   });
 
   // Bind every transcript card.
+  // Each trigger declares `data-src="content/transcripts/<slug>.html"` and the
+  // body is fetched lazily on first open. Loaded markup is cached in-memory
+  // so re-opening is instant.
+  var transcriptCache = {};
+
+  function loadTranscript(src) {
+    if (transcriptCache[src]) return Promise.resolve(transcriptCache[src]);
+    return fetch(src, { credentials: 'same-origin' }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.text();
+    }).then(function (html) {
+      transcriptCache[src] = html;
+      return html;
+    });
+  }
+
   document.querySelectorAll('.transcript-trigger').forEach(function (btn) {
     btn.addEventListener('click', function () {
-      var tplId = btn.getAttribute('data-template');
+      var src = btn.getAttribute('data-src');
       var title = btn.getAttribute('data-title') || '';
       var source = btn.getAttribute('data-source') || '';
-      var tpl = document.getElementById(tplId);
-      var body = tpl ? tpl.innerHTML : '<p>Transcript missing.</p>';
-      openText(title, source, body);
+      if (!src) {
+        // Backwards-compat with old `data-template` form.
+        var tpl = document.getElementById(btn.getAttribute('data-template') || '');
+        openText(title, source, tpl ? tpl.innerHTML : '<p>Transcript missing.</p>');
+        return;
+      }
+      openText(title, source, '<p><em>Loading…</em></p>');
+      loadTranscript(src).then(function (html) {
+        openText(title, source, html);
+      }).catch(function () {
+        openText(title, source, '<p><em>Failed to load transcript.</em></p>');
+      });
+    });
+  });
+})();
+
+/* ----- Email signup form ----- */
+(function () {
+  // Paste the deployed Apps Script web app URL here:
+  var SIGNUP_ENDPOINT = 'PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+
+  var form = document.getElementById('signup-form');
+  if (!form) return;
+  var input = document.getElementById('signup-email');
+  var status = document.getElementById('signup-status');
+  var button = form.querySelector('button[type="submit"]');
+
+  function setStatus(msg, kind) {
+    status.textContent = msg;
+    status.classList.remove('is-success', 'is-error');
+    if (kind) status.classList.add('is-' + kind);
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = (input.value || '').trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setStatus('Please enter a valid email address.', 'error');
+      input.focus();
+      return;
+    }
+    if (SIGNUP_ENDPOINT.indexOf('PASTE_') === 0) {
+      setStatus('Signup endpoint not configured yet.', 'error');
+      return;
+    }
+
+    button.disabled = true;
+    setStatus('Submitting…', null);
+
+    var body = new URLSearchParams({
+      email: email,
+      source: 'needle-in-a-haystack site',
+      userAgent: navigator.userAgent
+    }).toString();
+
+    // no-cors so the browser doesn't block the cross-origin POST.
+    // We can't read the response, so we treat a resolved promise as success.
+    fetch(SIGNUP_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body
+    }).then(function () {
+      setStatus('Thanks — we\'ll email you when the paper is out.', 'success');
+      input.value = '';
+    }).catch(function () {
+      setStatus('Something went wrong. Please try again later.', 'error');
+    }).then(function () {
+      button.disabled = false;
     });
   });
 })();

@@ -14,7 +14,7 @@ Turkish (all down) | images/fl_turkish.png | Question 20 (Turkish): every model 
 Mean delta heatmap | images/fl_heatmap.png | Per-question, per-model delta vs the matched English run. Cell color shows direction; darker = bigger swing.
 ```
 
-The two cherry-picked questions above bracket the range: in Mandarin
+The two example questions above bracket the range: in Mandarin
 every model improved, in Turkish every model regressed. Across the
 heatmap as a whole the swings are large in both directions on the same
 model, which suggests the effect is not a simple "model X is better in

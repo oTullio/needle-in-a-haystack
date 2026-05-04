@@ -1,17 +1,9 @@
 # Petri Top-40 Animal-Welfare Benchmark
 
-This page presents results from the **petri top-40** animal-welfare benchmark
-(40 scenarios, 13 judge dimensions, 12 used for the welfare aggregate). The
-five frontier models below were each run with the same auditor and judge
-under matched configuration.
+This page presents results from an animal welfare benchmark which exhibits a **needle in a haystack** strategy for **multi-turn auditing.**
 
-**Scope.** Welfare-aggregate scores are the mean of 12 dimension scores per
-question (the meta dimension `eval_awareness` is excluded from the welfare
-aggregate). The headline mean for a model is the mean of its 40 per-question
-welfare-aggregate scores.
+**Scope.**  40 scenarios, and 13 judge dimensions were used for the welfare aggregate, on five frontier models. `eval_awareness` was excluded from the mean scores as it is used only as a separate indicator.
 
-**Auditor and judge.** `google/gemini-3-flash-preview` for both, with judge
-dimension set `animal_welfare_judge_v2`.
+**Auditor and judge.** `google/gemini-3-flash-preview` was both the auditor and the judge.
 
-**Source.** All numbers and charts are derived from
-`evals-gui-results/petri/analysis/benchmark_loop/`.
+**Questions.** The full seed set will not be released yet to avoid leakage, feel free to email the authors for access.

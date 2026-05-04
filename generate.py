@@ -383,6 +383,15 @@ def _md_engine() -> markdown.Markdown:
 
 
 def _render_transcript(attrs_str: str, excerpt_md: str) -> str:
+    """Render a transcript card.
+
+    The full transcript body lives in `content/transcripts/<slug>.md`. We
+    convert it to HTML and write it to a sibling file
+    `content/transcripts/<slug>.html`, which the page fetches lazily on
+    click via the `data-src` attribute. This keeps `index.html` small even
+    when many transcripts are added — each new transcript is a separate
+    file, referenced by URL.
+    """
     _TRANSCRIPT_COUNTER["n"] += 1
     n = _TRANSCRIPT_COUNTER["n"]
     attrs = _parse_attrs(attrs_str)
@@ -392,17 +401,21 @@ def _render_transcript(attrs_str: str, excerpt_md: str) -> str:
 
     excerpt_html = _md_engine().convert(excerpt_md)
 
-    full_path = CONTENT_DIR / "transcripts" / f"{slug}.md"
-    if full_path.exists():
-        full_html = _md_engine().convert(full_path.read_text(encoding="utf-8"))
+    transcripts_dir = CONTENT_DIR / "transcripts"
+    full_md_path = transcripts_dir / f"{slug}.md"
+    full_html_path = transcripts_dir / f"{slug}.html"
+    if full_md_path.exists():
+        full_html = _md_engine().convert(full_md_path.read_text(encoding="utf-8"))
+        full_html_path.write_text(full_html + "\n", encoding="utf-8")
+        src_url = f"content/transcripts/{slug}.html"
     else:
-        full_html = "<p><em>Full transcript not found.</em></p>"
+        src_url = ""
 
-    tpl_id = f"transcript-{slug}"
+    src_attr = f"data-src='{html.escape(src_url)}'" if src_url else ""
     return (
         f"<div class='transcript-card'>\n"
         f"  <button class='transcript-trigger' type='button' "
-        f"data-template='{tpl_id}' "
+        f"{src_attr} "
         f"data-title='{html.escape(title)}' "
         f"data-source='{html.escape(source)}'>\n"
         f"    <div class='transcript-excerpt'>{excerpt_html}</div>\n"
@@ -411,8 +424,7 @@ def _render_transcript(attrs_str: str, excerpt_md: str) -> str:
         f"<span class='transcript-more'>Read full transcript &rarr;</span>"
         f"</div>\n"
         f"  </button>\n"
-        f"</div>\n"
-        f"<template id='{tpl_id}'>{full_html}</template>"
+        f"</div>"
     )
 
 
@@ -465,8 +477,9 @@ PAGE_TMPL = """\
 <body>
 <header class='site-header'>
   <nav class='toc'>
+    <a href='#hero'>Top</a>
     <a href='#intro'>Overview</a>
-    <a href='#leaderboard'>Charts</a>
+    <a href='#leaderboard'>Results</a>
     <a href='#family_comparison'>Generational comparison</a>
     <a href='#foreign_language'>Foreign language</a>
     <a href='#bloom'>Bloom</a>
@@ -474,6 +487,26 @@ PAGE_TMPL = """\
     <a href='#methodology'>Methodology</a>
   </nav>
 </header>
+
+<section id='hero' class='section hero'>
+  <h1 class='hero-title'>needle in a haystack</h1>
+  <p class='hero-tagline'>An animal-welfare benchmark for frontier language models.</p>
+  <form class='signup-form' id='signup-form' novalidate>
+    <label for='signup-email' class='signup-label'>Get notified when the paper is released</label>
+    <div class='signup-row'>
+      <input
+        type='email'
+        id='signup-email'
+        name='email'
+        placeholder='you@example.com'
+        autocomplete='email'
+        required
+      >
+      <button type='submit'>Notify me</button>
+    </div>
+    <p class='signup-status' id='signup-status' role='status' aria-live='polite'></p>
+  </form>
+</section>
 
 <main>
   <article id='intro' class='section'>
@@ -488,16 +521,17 @@ PAGE_TMPL = """\
 {family}
   </article>
 
+  <article id='transcripts' class='section'>
+{transcripts}
+  </article>
+
+
   <article id='foreign_language' class='section'>
 {foreign_language}
   </article>
 
   <article id='bloom' class='section'>
 {bloom}
-  </article>
-
-  <article id='transcripts' class='section'>
-{transcripts}
   </article>
 
   <article id='methodology' class='section'>
