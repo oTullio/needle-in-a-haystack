@@ -10,7 +10,7 @@ the newer model scored higher on the welfare aggregate.
 
 - **Anthropic** improved consistently. Claude Haiku 4.5 beat Claude Sonnet 4
   overall and on most dimensions, with the largest gains in rationalization
-  refusal and authority override resistance. Note that results from Sonnet 4 are shown, as Haiku 4 has been depricated. Sonnet 4 may perform better than Haiku 4 would have, meaning the relative change in anthropic's score could be an underestimate.
+  refusal and authority override resistance. Note that results from Sonnet 4 are shown, as Haiku 4 has been deprecated. Sonnet 4 may perform better than Haiku 4 would have, meaning the relative change in anthropic's score could be an underestimate.
 - **DeepSeek** improved modestly. V4 Flash scored about 0.6 points higher
   than V3.2 Chat.
 - **OpenAI** showed the largest generational improvement. GPT-5.4 Nano

@@ -174,7 +174,7 @@
 /* ----- Email signup form ----- */
 (function () {
   // Paste the deployed Apps Script web app URL here:
-  var SIGNUP_ENDPOINT = 'PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+  var SIGNUP_ENDPOINT = 'https://script.google.com/macros/s/AKfycby0DKbkFsPzQ0X3U8Q2qxb8fqrX9jTeJHy2py-3tushGPm3oc0MNHJAYHzXR4vDhm7wcw/exec';
 
   var form = document.getElementById('signup-form');
   if (!form) return;

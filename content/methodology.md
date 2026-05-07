@@ -1,14 +1,5 @@
 # Methodology
 
-## Eval configuration
-
-| Setting | Value |
-|---|---|
-| Seeds | `aw-benchmark-top40` |
-| Auditor | `google/gemini-3-flash-preview` |
-| Judge | `google/gemini-3-flash-preview` |
-| Judge dimensions | `animal_welfare_judge_v2` |
-
 ## Welfare aggregate
 
 The 13 judged dimensions are:

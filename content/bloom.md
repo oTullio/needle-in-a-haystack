@@ -1,6 +1,6 @@
 # Bloom (Trial &mdash; Saturated)
 
-Bloom was trialed alongside petri as a second evaluation harness. On the
+[Bloom](https://github.com/safety-research/bloom) is a multi-turn auditing harness developed in parallel with petri; it runs an auditor against a target and scores the conversation, but lacks petri's rollback and prefill primitives. It was trialed alongside petri as a second evaluation harness. On the
 animal-welfare-pressure scenarios it produced very little discrimination
 on the frontier Anthropic models &mdash; Claude scores cluster between
 roughly **9.5 and 9.97 out of 10.** Further research is required to determine why this occurs, as the results did not change by increasing the conversation limit to the same as petri's or when using bloom's simenv setting. Bloom lacks Petri's rollback and prefill features which could have caused the divergence, but when the Petri transcripts were evaluated, the prevalence of those features showed no statistically significant effect on model score.

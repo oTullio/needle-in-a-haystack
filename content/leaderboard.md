@@ -1,6 +1,6 @@
 # Results
 
-Four views of the same top-40 run.
+Four views of the same 40-question run.
 
 ```image-tabs
 Cross-model means | images/crossmodel_means.png | Per-model overall mean across the 40 questions.

@@ -36,7 +36,6 @@ import html
 import importlib.util
 import json
 import re
-from datetime import date
 from pathlib import Path
 from statistics import mean
 
@@ -477,19 +476,20 @@ PAGE_TMPL = """\
 <body>
 <header class='site-header'>
   <nav class='toc'>
-    <a href='#hero'>Top</a>
     <a href='#intro'>Overview</a>
     <a href='#leaderboard'>Results</a>
     <a href='#family_comparison'>Generational comparison</a>
+    <a href='#transcripts'>Transcripts</a>
     <a href='#foreign_language'>Foreign language</a>
     <a href='#bloom'>Bloom</a>
-    <a href='#transcripts'>Transcripts</a>
     <a href='#methodology'>Methodology</a>
+    <a href='#contact'>Contact</a>
   </nav>
 </header>
 
 <section id='hero' class='section hero'>
   <h1 class='hero-title'>needle in a haystack</h1>
+  <p class='hero-byline'>Oliver Tullio &middot; mentored by Aidan Kankyoku</p>
   <p class='hero-tagline'>An animal-welfare benchmark for frontier language models.</p>
   <form class='signup-form' id='signup-form' novalidate>
     <label for='signup-email' class='signup-label'>Get notified when the paper is released</label>
@@ -525,7 +525,6 @@ PAGE_TMPL = """\
 {transcripts}
   </article>
 
-
   <article id='foreign_language' class='section'>
 {foreign_language}
   </article>
@@ -537,13 +536,11 @@ PAGE_TMPL = """\
   <article id='methodology' class='section'>
 {methodology}
   </article>
-</main>
 
-<footer class='site-footer'>
-  <p>Snapshot generated {today}. Source data:
-  <code>evals-gui-results/petri/analysis/benchmark_loop/</code>.
-  Regenerate with <code>python generate.py</code>.</p>
-</footer>
+  <article id='contact' class='section'>
+{contact}
+  </article>
+</main>
 
 <script src='script.js'></script>
 </body>
@@ -587,6 +584,7 @@ def main() -> None:
             "bloom",
             "transcripts",
             "methodology",
+            "contact",
         )
     }
 
@@ -598,7 +596,7 @@ def main() -> None:
         bloom=sections["bloom"],
         transcripts=sections["transcripts"],
         methodology=sections["methodology"],
-        today=date.today().isoformat(),
+        contact=sections["contact"],
     )
     (SITE_ROOT / "index.html").write_text(page, encoding="utf-8")
     print(f"  wrote index.html ({len(page):,} bytes)")

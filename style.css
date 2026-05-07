@@ -405,6 +405,11 @@ td.delta.negative { color: var(--negative); }
   margin: 0 0 0.35rem;
   line-height: 1.1;
 }
+.hero-byline {
+  margin: 0 0 0.5rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
 .hero-tagline {
   margin: 0 0 0;
   color: var(--muted);
