@@ -1,1 +1,5 @@
 markdown>=3.5
+matplotlib>=3.7
+# Note: `python generate.py` also reads model scores from a sibling checkout at
+# ../evals-gui-results (see SOURCE_REPO in generate.py). The built static site
+# itself needs neither this package nor that repo — they are build-time only.

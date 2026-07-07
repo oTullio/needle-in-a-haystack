@@ -119,6 +119,12 @@ def _load_module(path: Path, name: str):
 
     plt.savefig = lambda *a, **k: None  # type: ignore[assignment]
     plt.show = lambda *a, **k: None  # type: ignore[assignment]
+    # The plotting scripts save via the Figure method (fig.savefig(...)), which
+    # the plt.savefig stub above does NOT intercept — without this, every build
+    # silently rewrites chart PNGs inside the sibling evals-gui-results repo.
+    import matplotlib.figure  # noqa: E402
+
+    matplotlib.figure.Figure.savefig = lambda *a, **k: None  # type: ignore[assignment]
     spec.loader.exec_module(mod)
     return mod
 
